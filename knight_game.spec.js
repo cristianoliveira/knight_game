@@ -34,8 +34,9 @@ describe("Knight", () => {
 });
 
 describe("Game", () => {
+  let mockStdout = jest.fn;
+
   it("has a winner", () => {
-    let mockStdout = jest.fn;
     let cheater = new Knight(1);
     cheater.hasDied = () => false;
 
@@ -43,6 +44,15 @@ describe("Game", () => {
     let winner = game.run();
 
     expect(winner).toBe(cheater);
+  })
+
+  it("has a winner if there is no oponent", () => {
+    let foreverAlone = new Knight(1);
+
+    let game = new Game([ foreverAlone ], mockStdout);
+    let winner = game.run();
+
+    expect(winner).toBe(foreverAlone);
   })
 });
 
