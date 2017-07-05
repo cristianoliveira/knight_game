@@ -38,7 +38,7 @@ class Game {
 
       let atkDamage = attacker.hit();
       defender.receiveDamage(atkDamage);
-      this.output(` Knight ${attacker.id}(${attacker.hp}) hit Knight ${defender.id}(${defender.hp}) for ${atkDamage}`);
+      this.output(`Knight ${attacker.id} hit Knight ${defender.id} for ${atkDamage}`);
 
       this.knights.push(attacker);
 

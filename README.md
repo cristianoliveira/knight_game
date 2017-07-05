@@ -6,6 +6,8 @@ There are 6 knights are stading in a circle and fighting each other.
   - The damage is a random number between 1..6
 
 # Running
+Before each do `npm run build`
+
 Terminal
 ```
 npm run game
