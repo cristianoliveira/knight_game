@@ -2,12 +2,17 @@
 A simple game made with js
 
 # Running
-To run this example do:
+Terminal
 ```
 npm run game
 ```
 
-# Test
+Web
+```
+npm run server
+```
+
+# Testing
 ```
 npm run test
 ```

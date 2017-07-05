@@ -20,9 +20,9 @@ class Knight {
 }
 
 class Game {
-  constructor(knights, stdout) {
+  constructor(knights, output) {
     this.knights = knights;
-    this.stdout = stdout;
+    this.output = output;
     this.winner = null;
   }
 
@@ -38,19 +38,19 @@ class Game {
 
       let atkDamage = attacker.hit();
       defender.receiveDamage(atkDamage);
-      this.stdout(` Knight ${attacker.id}(${attacker.hp}) hit Knight ${defender.id}(${defender.hp}) for ${atkDamage}`);
+      this.output(` Knight ${attacker.id}(${attacker.hp}) hit Knight ${defender.id}(${defender.hp}) for ${atkDamage}`);
 
       this.knights.push(attacker);
 
       if (defender.hasDied()) {
-        this.stdout(`Knight ${defender.id} died !!!!!`);
+        this.output(`Knight ${defender.id} died !!!!!`);
         attacker = this.knights.shift();
       } else {
         attacker = defender;
       }
     }
 
-    console.log(`Knight ${this.winner.id} win`);
+    this.output(`Knight ${this.winner.id} win`);
     return this.winner;
   }
 }
