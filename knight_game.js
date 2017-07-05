@@ -44,6 +44,7 @@ class Game {
 
       if (defencer.hasDied()) {
         this.stdout(`Knight ${defencer.id} died !!!!!`);
+        defencer = null;
         attacker = this.knights.shift();
       } else {
         attacker = defencer;
@@ -51,7 +52,7 @@ class Game {
     }
 
     console.log(`Knight ${this.winner.id} win`);
-    return attacker;
+    return this.winner;
   }
 }
 
