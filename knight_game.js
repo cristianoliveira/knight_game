@@ -44,13 +44,13 @@ class Game {
 
       if (defencer.hasDied()) {
         this.stdout(`Knight ${defencer.id} died !!!!!`);
-        defencer = this.knights.shift();
+        attacker = this.knights.shift();
+      } else {
+        attacker = defencer;
       }
-
-      attacker = defencer;
     }
 
-    console.log(`Knight ${attacker.id} win`);
+    console.log(`Knight ${this.winner.id} win`);
     return attacker;
   }
 }
