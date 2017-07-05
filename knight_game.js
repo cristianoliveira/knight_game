@@ -30,24 +30,24 @@ class Game {
     let attacker = this.knights.shift();
 
     while(!this.winner) {
-      let defencer = this.knights.shift();
-      if (!defencer) {
+      let defender = this.knights.shift();
+      if (!defender) {
         this.winner = attacker;
         continue;
       }
 
       let atkDamage = attacker.hit();
-      defencer.receiveDamage(atkDamage);
-      this.stdout(` Knight ${attacker.id}(${attacker.hp}) hit Knight ${defencer.id}(${defencer.hp}) for ${atkDamage}`);
+      defender.receiveDamage(atkDamage);
+      this.stdout(` Knight ${attacker.id}(${attacker.hp}) hit Knight ${defender.id}(${defender.hp}) for ${atkDamage}`);
 
       this.knights.push(attacker);
 
-      if (defencer.hasDied()) {
-        this.stdout(`Knight ${defencer.id} died !!!!!`);
-        defencer = null;
+      if (defender.hasDied()) {
+        this.stdout(`Knight ${defender.id} died !!!!!`);
+        defender = null;
         attacker = this.knights.shift();
       } else {
-        attacker = defencer;
+        attacker = defender;
       }
     }
 
