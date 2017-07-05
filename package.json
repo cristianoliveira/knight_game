@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack -p",
+    "build": "webpack",
     "server": "webpack-dev-server",
     "game": "node terminal.js",
     "test": "jest"
@@ -15,10 +15,6 @@
     "babel-eslint": "^7.1.1",
     "babel-jest": "20.0.3",
     "babel-loader": "^7.1.1",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-preset-es2017": "^6.24.1",
-    "babel-preset-stage-1": "^6.24.1",
     "webpack": "^3.0.0",
     "webpack-dev-server": "^2.5.0"
   }
