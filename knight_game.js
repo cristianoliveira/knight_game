@@ -31,11 +31,12 @@ class Game {
   }
 
   run() {
+    if (this.knights.length == 0) { return }
+
     let attacker = this.knights.shift();
     let defender = this.knights.shift();
 
     while(!this.hasWinner(attacker, defender)) {
-
       let atkDamage = attacker.hit();
       defender.receiveDamage(atkDamage);
       this.output(`👊 - Knight ${attacker.id} hit Knight ${defender.id} for ${atkDamage}`);

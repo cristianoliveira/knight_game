@@ -54,5 +54,13 @@ describe("Game", () => {
 
     expect(winner).toBe(foreverAlone);
   })
+
+  it("has no winner when there is no knights", () => {
+    let game = new Game([], mockStdout);
+
+    let winner = game.run();
+
+    expect(winner).toBe(undefined);
+  })
 });
 
