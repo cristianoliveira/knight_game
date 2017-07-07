@@ -26,32 +26,34 @@ class Game {
     this.winner = null;
   }
 
+  hasWinner(attacker, defender) {
+    return attacker && (!defender);
+  }
+
   run() {
     let attacker = this.knights.shift();
+    let defender = this.knights.shift();
 
-    while(!this.winner) {
-      let defender = this.knights.shift();
-      if (!defender) {
-        this.winner = attacker;
-        continue;
-      }
+    while(!this.hasWinner(attacker, defender)) {
 
       let atkDamage = attacker.hit();
       defender.receiveDamage(atkDamage);
-      this.output(`Knight ${attacker.id} hit Knight ${defender.id} for ${atkDamage}`);
+      this.output(`👊 - Knight ${attacker.id} hit Knight ${defender.id} for ${atkDamage}`);
 
       this.knights.push(attacker);
 
       if (defender.hasDied()) {
-        this.output(`Knight ${defender.id} died !!!!!`);
+        this.output(`💀 - Knight ${defender.id} died !!!!!`);
         attacker = this.knights.shift();
       } else {
         attacker = defender;
       }
+
+      defender = this.knights.shift();
     }
 
-    this.output(`Knight ${this.winner.id} win`);
-    return this.winner;
+    this.output(`😎 - Knight ${attacker.id} win`);
+    return attacker;
   }
 }
 
