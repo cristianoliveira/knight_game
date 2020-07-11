@@ -3,7 +3,7 @@ const SOURCE_DIR = path.resolve(__dirname, '.');
 const DIST_DIR = path.resolve(__dirname, 'dist');
 
 module.exports = {
-  entry: SOURCE_DIR + '/index.js',
+  entry: SOURCE_DIR + '/web.js',
   output: {
     path: DIST_DIR,
     filename: 'knight_game.min.js',

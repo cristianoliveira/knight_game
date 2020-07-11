@@ -21,17 +21,29 @@ class Knight {
   }
 }
 
-// Schedule each Game turns to appear with 1s of delay between each other
+Knight.MAX_HP = MAX_HP;
+
+// Schedule each turn to appear with 1s of delay between each other
 // So the 1st turns appear after 1s, the 2nd after 2s, and so on...
 let tickerMultiplier = 0;
 const ONE_SECOND = 1000;
-const delayedOutput = stdout => msg => {
+const copyEvent = obj => JSON.parse(JSON.stringify(obj)); // avoid reference issues
+const delayedOutput = stdout => event => {
   tickerMultiplier += 1;
-  setTimeout(() => stdout(msg), tickerMultiplier  *  ONE_SECOND)
+  const copiedEvent = copyEvent(event);
+  setTimeout(() => stdout(copiedEvent), tickerMultiplier  *  ONE_SECOND)
+}
+
+
+const MESSAGE_TYPES = {
+  round: 'round',
+  dead: 'dead',
+  winner: 'winner'
 }
 
 class Game {
   constructor(knights, output) {
+    this.round = 0;
     this.knights = knights;
     this.output = delayedOutput(output);
     this.winner = null;
@@ -46,19 +58,22 @@ class Game {
 
     let attacker = this.knights.shift();
     let defender = this.knights.shift();
-
+    this.round += 1;
     while(!this.hasWinner(attacker, defender)) {
-      let atkDamage = attacker.hit();
-      defender.receiveDamage(atkDamage);
-      this.output(`👊 - Knight ${attacker.id} hit Knight ${defender.id} with ${atkDamage} damage\n
-      ---
-      Kinght ${defender.id} HP: ${defender.hp}/${MAX_HP}\r
-      `);
+      let damage = attacker.hit();
+      defender.receiveDamage(damage);
+      this.output({
+        type: MESSAGE_TYPES.round,
+        attacker,
+        defender,
+        damage,
+        round: this.round
+      });
 
       this.knights.push(attacker);
 
       if (defender.hasDied()) {
-        this.output(`💀 - Knight ${defender.id} died !!!!!`);
+        this.output({ type: MESSAGE_TYPES.dead, defender })
         attacker = this.knights.shift();
       } else {
         attacker = defender;
@@ -67,10 +82,13 @@ class Game {
       defender = this.knights.shift();
     }
 
-    this.output(`😎 - Knight ${attacker.id} win`);
+    this.output({ type: MESSAGE_TYPES.winner, attacker })
+    this.round += 1;
     return attacker;
   }
 }
+
+Game.MESSAGE_TYPES = MESSAGE_TYPES;
 
 exports.Knight = Knight;
 exports.Game = Game;

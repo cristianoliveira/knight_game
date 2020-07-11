@@ -5,9 +5,9 @@ const formatEventOutput = ({ type, attacker, defender, damage }) => {
   switch (type) {
 
     case Game.MESSAGE_TYPES.round:
-      return `👊 - Knight ${attacker.id} hit Knight ${defender.id} with ${damage} damage\n
-      ---
-      Kinght ${defender.id} HP: ${defender.hp}/${Knight.MAX_HP}\r `;
+      return `👊 - Knight ${attacker.id} hit Knight ${defender.id} with ${damage} damage
+      Kinght ${defender.id} HP: ${defender.hp}/${Knight.MAX_HP}
+      `;
 
     case Game.MESSAGE_TYPES.dead:
       return `💀 - Knight ${defender.id} died !!!!!`
@@ -16,13 +16,19 @@ const formatEventOutput = ({ type, attacker, defender, damage }) => {
       return `😎 - Knight ${attacker.id} win`;
 
     default:
-      return '';
+      return 'error';
 
   }
 
 }
 
-let stdout = (event) => console.log(formatEventOutput(event));
+function stdout(event) {
+  let content = document.getElementById("content")
+  let p = document.createElement("p");
+  p.appendChild(document.createTextNode(formatEventOutput(event)));
+  content.appendChild(p);
+  console.log('content: ', content.innerHTML);
+}
 
 let game = new Game([
   new Knight(1),
@@ -33,4 +39,4 @@ let game = new Game([
   new Knight(6)
 ], stdout);
 
-game.run();
+game.run()
