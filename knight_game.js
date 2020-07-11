@@ -19,10 +19,18 @@ class Knight {
   }
 }
 
+// Schedule each Game round to appear with 1s of delay between each other
+let tickerMultiplier = 0;
+const ONE_SECOND = 1000;
+const delayedOutput = stdout => msg => {
+  tickerMultiplier += 1;
+  setTimeout(() => stdout(msg), tickerMultiplier  *  ONE_SECOND)
+}
+
 class Game {
   constructor(knights, output) {
     this.knights = knights;
-    this.output = output;
+    this.output = delayedOutput(output);
     this.winner = null;
   }
 
@@ -39,7 +47,7 @@ class Game {
     while(!this.hasWinner(attacker, defender)) {
       let atkDamage = attacker.hit();
       defender.receiveDamage(atkDamage);
-      this.output(`👊 - Knight ${attacker.id} hit Knight ${defender.id} for ${atkDamage}`);
+      this.output(`👊 - Knight ${attacker.id} hit Knight ${defender.id} with ${atkDamage} damage`);
 
       this.knights.push(attacker);
 

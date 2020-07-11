@@ -1,17 +1,12 @@
 let Knight = require('./knight_game.js').Knight;
 let Game = require('./knight_game.js').Game;
 
-
 function stdout(msg) {
-  let append = () => {
-    let content = document.getElementById("content")
-    let p = document.createElement("p");
-    p.appendChild(document.createTextNode(msg));
-    content.appendChild(p);
-  }
-
-  // Them we can follow each turn :)
-  setInterval(append, 8000);
+  let content = document.getElementById("content")
+  let p = document.createElement("p");
+  p.appendChild(document.createTextNode(msg));
+  content.appendChild(p);
+  console.log('content: ', content.innerHTML);
 }
 
 let game = new Game([
