@@ -1,7 +1,9 @@
+const MAX_HP = 100;
+
 class Knight {
   constructor(id) {
     this.id = id;
-    this.hp = 100;
+    this.hp = MAX_HP;
   }
 
   receiveDamage(damage) {
@@ -19,7 +21,8 @@ class Knight {
   }
 }
 
-// Schedule each Game round to appear with 1s of delay between each other
+// Schedule each Game turns to appear with 1s of delay between each other
+// So the 1st turns appear after 1s, the 2nd after 2s, and so on...
 let tickerMultiplier = 0;
 const ONE_SECOND = 1000;
 const delayedOutput = stdout => msg => {
@@ -47,7 +50,10 @@ class Game {
     while(!this.hasWinner(attacker, defender)) {
       let atkDamage = attacker.hit();
       defender.receiveDamage(atkDamage);
-      this.output(`👊 - Knight ${attacker.id} hit Knight ${defender.id} with ${atkDamage} damage`);
+      this.output(`👊 - Knight ${attacker.id} hit Knight ${defender.id} with ${atkDamage} damage\n
+      ---
+      Kinght ${defender.id} HP: ${defender.hp}/${MAX_HP}\r
+      `);
 
       this.knights.push(attacker);
 
