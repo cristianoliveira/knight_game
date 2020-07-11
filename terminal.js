@@ -22,7 +22,7 @@ const formatEventOutput = ({ type, attacker, defender, damage }) => {
 
 }
 
-let stdout = (event) => console.log(formatEventOutput(event));
+let eventHandler = (event) => console.log(formatEventOutput(event));
 
 let game = new Game([
   new Knight(1),
@@ -31,6 +31,6 @@ let game = new Game([
   new Knight(4),
   new Knight(5),
   new Knight(6)
-], stdout);
+], eventHandler);
 
 game.run();

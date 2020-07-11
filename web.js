@@ -22,12 +22,11 @@ const formatEventOutput = ({ type, attacker, defender, damage }) => {
 
 }
 
-function stdout(event) {
+function eventHandler(event) {
   let content = document.getElementById("content")
   let p = document.createElement("p");
   p.appendChild(document.createTextNode(formatEventOutput(event)));
   content.appendChild(p);
-  console.log('content: ', content.innerHTML);
 }
 
 let game = new Game([
@@ -37,6 +36,6 @@ let game = new Game([
   new Knight(4),
   new Knight(5),
   new Knight(6)
-], stdout);
+], eventHandler);
 
 game.run()

@@ -28,10 +28,10 @@ Knight.MAX_HP = MAX_HP;
 let tickerMultiplier = 0;
 const ONE_SECOND = 1000;
 const copyEvent = obj => JSON.parse(JSON.stringify(obj)); // avoid reference issues
-const delayedOutput = stdout => event => {
+const delayEvent = dispatcher => event => {
   tickerMultiplier += 1;
   const copiedEvent = copyEvent(event);
-  setTimeout(() => stdout(copiedEvent), tickerMultiplier  *  ONE_SECOND)
+  setTimeout(() => dispatcher(copiedEvent), tickerMultiplier  *  ONE_SECOND)
 }
 
 
@@ -42,10 +42,10 @@ const MESSAGE_TYPES = {
 }
 
 class Game {
-  constructor(knights, output) {
+  constructor(knights, dispatcher) {
     this.round = 0;
     this.knights = knights;
-    this.output = delayedOutput(output);
+    this.dispatcher = delayEvent(dispatcher);
     this.winner = null;
   }
 
@@ -62,7 +62,7 @@ class Game {
     while(!this.hasWinner(attacker, defender)) {
       let damage = attacker.hit();
       defender.receiveDamage(damage);
-      this.output({
+      this.dispatcher({
         type: MESSAGE_TYPES.round,
         attacker,
         defender,
@@ -73,7 +73,7 @@ class Game {
       this.knights.push(attacker);
 
       if (defender.hasDied()) {
-        this.output({ type: MESSAGE_TYPES.dead, defender })
+        this.dispatcher({ type: MESSAGE_TYPES.dead, defender })
         attacker = this.knights.shift();
       } else {
         attacker = defender;
@@ -82,7 +82,7 @@ class Game {
       defender = this.knights.shift();
     }
 
-    this.output({ type: MESSAGE_TYPES.winner, attacker })
+    this.dispatcher({ type: MESSAGE_TYPES.winner, attacker })
     this.round += 1;
     return attacker;
   }
